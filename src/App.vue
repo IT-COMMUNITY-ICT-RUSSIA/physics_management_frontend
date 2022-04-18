@@ -7,16 +7,7 @@ export default {
 </script>
 
 <template>
-  <div class="container">
-    <br />
-    <div class="row justify-content-md-center">
-      <div class="col-4 align-self-center">
-        <div class="p-3 border bg-white">
-          <Login />
-        </div>
-      </div>
-    </div>
-  </div>
+  <router-view></router-view>
 </template>
 
 <style>
