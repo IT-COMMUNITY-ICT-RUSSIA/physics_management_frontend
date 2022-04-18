@@ -1,8 +1,8 @@
 <template>
   <div class="container-fluid">
     <br />
-    <div class="row justify-content-md-center">
-      <div class="col-sm-4 align-self-center">
+    <div class="row d-flex justify-content-center">
+      <div class="col-xs-2 col-md-6 col-sm-6 col-lg-4 align-self-center">
         <div class="p-3 border bg-white">
           <Login />
         </div>
