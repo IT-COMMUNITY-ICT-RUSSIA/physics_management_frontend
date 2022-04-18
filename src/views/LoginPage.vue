@@ -1,8 +1,8 @@
 <template>
-  <div class="container">
+  <div class="container-fluid">
     <br />
     <div class="row justify-content-md-center">
-      <div class="col-4 align-self-center">
+      <div class="col-sm-4 align-self-center">
         <div class="p-3 border bg-white">
           <Login />
         </div>
@@ -19,4 +19,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+/* .col-custom {
+  min-width: inherit;
+} */
+</style>
