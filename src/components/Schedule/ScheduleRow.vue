@@ -1,7 +1,8 @@
 <template>
   <!-- <schedule-slot /> -->
+  
   <tr>
-    <th class="lead" scope="row">{{ this.time }}</th>
+    <th class="lead text-center" scope="row">{{ this.time }}</th>
     <td v-for="i in [1, 2, 3]" :key="i">
       <test-user-icon class="icon" />
       <test-user-icon class="icon" />

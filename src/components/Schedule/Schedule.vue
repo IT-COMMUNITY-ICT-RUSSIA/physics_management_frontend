@@ -2,7 +2,7 @@
   <!-- <div v-for="i in [1, 2, 3, 4]" :key="i">
     <schedule-row :time="i + ' Час'" />
   </div> -->
-  <table class="table table-borderless text-center">
+  <table class="table table-borderless table-hover text-center align-middle">
     <thead>
       <tr>
         <th scope="col" class="lead text-capitalize">
@@ -15,7 +15,9 @@
         <th scope="col" class="lead">Установка №3</th>
       </tr>
     </thead>
-    <schedule-row :time="i + ' Час'" v-for="i in [1, 2, 3, 4]" :key="i" />
+    <tbody>
+      <schedule-row :time="i + ' Час'" v-for="i in [1, 2, 3, 4]" :key="i" />
+    </tbody>
   </table>
 </template>
 
@@ -46,5 +48,12 @@ th {
 .arrow {
   width: 24px;
   padding-bottom: 2px;
+}
+.centered-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
 }
 </style>
