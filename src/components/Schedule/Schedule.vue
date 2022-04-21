@@ -16,7 +16,7 @@
       </tr>
     </thead>
     <tbody>
-      <schedule-row :time="i + ' Час'" v-for="i in [1, 2, 3, 4]" :key="i" />
+      <schedule-row :time=i v-for="i in [1, 2, 3, 4]" :key="i" />
     </tbody>
   </table>
 </template>

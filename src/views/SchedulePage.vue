@@ -16,10 +16,29 @@
       <schedule />
     </div>
     <div class="row">
-      <p class="sub-h inactive">
-        Нажмите на свободное место, чтобы записаться на соответствующую установку
-        и время.
+      <p class="sub-h description">
+        Нажмите на свободное место, чтобы записаться на соответствующую
+        установку и время.
       </p>
+    </div>
+    <div class="row text-center align-middle">
+      <div class="col">
+        <button
+          type="button"
+          class="btn btn-secondary text-uppercase text-wrap"
+          v-if="counting"
+        >
+          Откроется через
+          <vue-countdown
+            :time="20 * 1000"
+            @end="stopCountdown"
+            v-slot="{ minutes, seconds }"
+          >
+            {{ normalizeTime(minutes) }}:{{ normalizeTime(seconds) }}
+          </vue-countdown>
+        </button>
+        <button class="btn btn-primary" v-else>Перейти к записи</button>
+      </div>
     </div>
   </div>
 </template>
@@ -33,9 +52,18 @@ export default {
     UserInfo,
     Schedule,
   },
+  methods: {
+    normalizeTime(time) {
+      return time < 10 ? "0" + time : time;
+    },
+    stopCountdown() {
+      this.counting = false;
+    },
+  },
   data() {
     return {
       scheduledTime: "12:00",
+      counting: true,
     };
   },
 };
@@ -51,11 +79,18 @@ export default {
   font-size: 16px;
 }
 .inactive {
-  color: var(--primary-color-dark-gray);
+  color: var(--primary-color-red);
   text-decoration: none;
+}
+.description {
+  color: var(--primary-color-gray);
 }
 .active {
   color: inherit;
   text-decoration: none;
+}
+.btn-secondary {
+  color: var(--primary-color-dark-gray);
+  background-color: var(--primary-color-light-gray) !important;
 }
 </style>
