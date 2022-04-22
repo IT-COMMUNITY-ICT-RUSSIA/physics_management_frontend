@@ -1,19 +1,9 @@
 <template>
-  <div class="empty-slot"></div>
+  <img src="https://img.icons8.com/ios/100/000000/active-state.png" />
 </template>
 
 <script>
 export default {};
 </script>
 
-<style scoped>
-.empty-slot {
-  width: 80px;
-  height: 80px;
-
-  background: #ffffff;
-  border: 3px dashed #c4c4c4;
-  border-radius: 80px;
-  box-sizing: border-box;
-}
-</style>
+<style scoped></style>
