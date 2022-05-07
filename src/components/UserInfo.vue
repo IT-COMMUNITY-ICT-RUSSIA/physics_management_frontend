@@ -24,19 +24,19 @@ export default {
     username: {
       type: String,
       default() {
-        return "Default Name";
+        return "Студент Физик";
       },
     },
     isu_number: {
       type: String,
       default() {
-        return "000000";
+        return "307526";
       },
     },
     avatar_link: {
-      type: [String, null],
+      type: String,
       default() {
-        return null;
+        return "https://isu.ifmo.ru/userpics/307526";
       },
     },
   },

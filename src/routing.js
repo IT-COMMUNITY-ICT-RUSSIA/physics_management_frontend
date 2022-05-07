@@ -4,7 +4,7 @@ import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
   { path: "/login", component: LoginPage },
-  { path: "/schedule", component: SchedulePage },
+  { path: "/", component: SchedulePage },
 ];
 
 const router = createRouter({
