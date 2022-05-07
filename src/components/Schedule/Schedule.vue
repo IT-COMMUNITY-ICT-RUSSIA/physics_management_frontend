@@ -1,7 +1,4 @@
 <template>
-  <!-- <div v-for="i in [1, 2, 3, 4]" :key="i">
-    <schedule-row :time="i + ' Час'" />
-  </div> -->
   <table class="table table-borderless table-hover text-center align-middle">
     <thead>
       <tr>
