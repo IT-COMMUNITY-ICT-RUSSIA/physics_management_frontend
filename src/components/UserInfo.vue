@@ -3,14 +3,29 @@
     <table style="width: 100%">
       <tr>
         <td style="width: 30%">
-          <test-user-icon v-if="!avatar_link" id="user_img" />
-          <img v-else v-bind:src="avatar_link" id="user_img" alt="" />
+          <test-user-icon v-if="!isUserLogged" id="user_img" />
+          <img
+            v-else
+            v-bind:src="avatar_link"
+            id="user_img"
+            alt=""
+            @click="doLogout"
+          />
         </td>
         <td style="width: 5%"></td>
-        <td id="user_td_name">
-          <h3>{{ username }}</h3>
-          {{ isu_number }}
-        </td>
+        <span v-if="isUserLogged">
+          <td id="user_td_name">
+            <h3>{{ username }}</h3>
+            {{ isu_number }}
+            <a @click="doLogout" href=""> Выйти </a>
+          </td>
+        </span>
+        <span v-else>
+          <td id="user_td_name">
+            <h3>Гость</h3>
+            <a href="/login"> Войти </a>
+          </td>
+        </span>
       </tr>
     </table>
   </div>
@@ -18,25 +33,38 @@
 
 <script>
 import TestUserIcon from "./Icons/TestUserIcon.vue";
+
 export default {
   components: { TestUserIcon },
+  methods: {
+    doLogout() {
+      localStorage.clear();
+    },
+  },
+  data() {
+    return {
+      isUserLogged: localStorage.getItem("logged"),
+      loggedUserID: localStorage.getItem("username"),
+    };
+  },
   props: {
     username: {
       type: String,
       default() {
-        return "Студент Физик";
+        return "Студент физик";
       },
     },
     isu_number: {
       type: String,
       default() {
-        return "307526";
+        return localStorage.getItem("username") || "307526";
       },
     },
     avatar_link: {
       type: String,
       default() {
-        return "https://isu.ifmo.ru/userpics/307526";
+        const isu_id = localStorage.getItem("username");
+        return `https://isu.ifmo.ru/userpics/${isu_id}`;
       },
     },
   },
@@ -64,7 +92,6 @@ export default {
   text-align: left;
   font-size: 20px;
   vertical-align: top;
-  color: var(--primary-color-light-gray);
   line-height: 1em;
 }
 

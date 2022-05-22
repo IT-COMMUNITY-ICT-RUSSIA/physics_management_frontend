@@ -1,49 +1,67 @@
 <template>
-  <form>
+  <span id="background">
     <div class="mb-3">
       <p class="text-center fs-4">Physics MVP</p>
     </div>
     <div class="mb-3">
       <label for="login" class="form-label fs-5">Имя пользователя</label>
-      <input class="form-control is-invalid" id="login" v-model="loginInput" />
-      <div id="validationServerUsernameFeedback" class="invalid-feedback">
-        Неверное имя пользователя.
-      </div>
+      <input
+        :class="{ 'form-control': true, 'is-invalid': retryEnter }"
+        id="login"
+        v-model="loginInput"
+      />
     </div>
     <div class="mb-3">
       <label for="pass" class="form-label fs-5">Пароль</label>
       <input
         type="password"
-        class="form-control"
+        :class="{ 'form-control': true, 'is-invalid': retryEnter }"
         id="pass"
         v-model="passwordInput"
       />
       <a href="#" class="text-decoration-none fs-6">Забыли пароль?</a>
+      <div
+        v-if="retryEnter"
+        id="validationServerUsernameFeedback"
+        :class="{ 'invalid-feedback': retryEnter }"
+        class="text-center"
+      >
+        Неправильный логин или пароль. Попробуйте снова
+      </div>
     </div>
     <div class="d-grid gap-2">
-      <button type="submit" class="btn btn-primary">Войти</button>
+      <button class="btn btn-primary" @click="authorize">Войти</button>
     </div>
-  </form>
+  </span>
 </template>
 
 <script>
+// import router from "../routing";
+import { doUserLogin } from "../store/userActions";
+
 export default {
   data() {
     return {
       passwordInput: "",
       loginInput: "",
+      retryEnter: false,
     };
   },
   methods: {
     authorize() {
-      // #TODO: fetch server
+      if (doUserLogin(this.loginInput, this.passwordInput)) {
+        this.retryEnter = false;
+        this.$router.push("/");
+      } else {
+        this.retryEnter = true;
+      }
     },
   },
 };
 </script>
 
 <style>
-form {
+#background {
   background-color: white;
 }
 p {
