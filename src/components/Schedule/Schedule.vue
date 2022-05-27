@@ -13,7 +13,7 @@
       </tr>
     </thead>
     <tbody>
-      <schedule-row :time=i v-for="i in [1, 2, 3, 4]" :key="i" />
+      <schedule-row :rowId="id" v-for="id in [0, 1, 2, 3]" :key="id" />
     </tbody>
   </table>
 </template>
@@ -22,8 +22,13 @@
 import ScheduleRow from "./ScheduleRow.vue";
 import RightArrowIcon from "../Icons/RightArrowIcon.vue";
 import LeftArrowIcon from "../Icons/LeftArrowIcon.vue";
+import { doFetchBoard, doFetchMe } from "../../store/userActions";
 
 export default {
+  setup() {
+    doFetchBoard();
+    doFetchMe();
+  },
   components: {
     ScheduleRow,
     RightArrowIcon,

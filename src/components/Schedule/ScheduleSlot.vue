@@ -5,20 +5,21 @@
     </a>
   </span>
 
-  <span v-else-if="slot_status">
+  <span v-else-if="slotStatus">
     <a
       role="button"
       data-bs-toggle="popover"
-      title="Фамилия Имя Отчество"
-      @click="slot_status = false"
-      @mouseover="icon_status = true"
-      @mouseleave="icon_status = false"
+      :title="user ? user.isu_id : null"
+      @click="slotStatus = false"
+      @mouseover="iconStatus = true"
+      @mouseleave="iconStatus = !iconStatus"
     >
-      <span v-if="icon_status">
+      <span v-if="iconStatus">
         <sign-in-icon />
       </span>
       <span v-else>
-        <test-user-icon id="user_img" />
+        <img :src="userAvatar" v-if="user" id="user_img" />
+        <test-user-icon v-else />
       </span>
     </a>
   </span>
@@ -27,11 +28,11 @@
     <a
       role="button"
       data-bs-toggle="popover"
-      @click="slot_status = true"
-      @mouseover="icon_status = true"
-      @mouseleave="icon_status = false"
+      @click="slotStatus = true"
+      @mouseover="iconStatus = true"
+      @mouseleave="iconStatus = !iconStatus"
     >
-      <span v-if="icon_status">
+      <span v-if="iconStatus">
         <add-icon />
       </span>
       <span v-else>
@@ -55,19 +56,30 @@ export default {
     EmptySlotIcon,
   },
   props: {
-    user: [Object, null],
+    id: Number,
+    colId: Number,
+    rowId: Number,
+    user: Object,
   },
 
   data() {
     return {
-      slot_status: false,
-      icon_status: false,
+      slotStatus: !this.isAvailableSlot(),
+      iconStatus: false,
     };
   },
 
   methods: {
-    isAvailableSlot: () => {
+    // isReservedByCurrentUser() {
+    //   return this.user === 
+    // },
+    isAvailableSlot() {
       return !Boolean(this.user);
+    },
+  },
+  computed: {
+    userAvatar() {
+      return `https://isu.ifmo.ru/userpics/${this.user.isu_number}`;
     },
   },
 };
@@ -75,7 +87,7 @@ export default {
 
 <style>
 #user_img {
-  width: 90px;
+  width: 100px;
   height: auto;
   border-radius: 90px;
   border: 3px solid var(--primary-color-blue);

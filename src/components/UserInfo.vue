@@ -6,7 +6,7 @@
           <test-user-icon v-if="!isUserLogged" id="user_img" />
           <img
             v-else
-            v-bind:src="avatar_link"
+            v-bind:src="avatarLink"
             id="user_img"
             alt=""
             @click="doLogout"
@@ -15,8 +15,8 @@
         <td style="width: 5%"></td>
         <span v-if="isUserLogged">
           <td id="user_td_name">
-            <h3>{{ username }}</h3>
-            {{ isu_number }}
+            <h3>{{ loggedUser.full_name }}</h3>
+            {{ loggedUser.username }}
             <a @click="doLogout" href=""> Выйти </a>
           </td>
         </span>
@@ -43,29 +43,13 @@ export default {
   },
   data() {
     return {
-      isUserLogged: localStorage.getItem("logged"),
-      loggedUserID: localStorage.getItem("username"),
+      isUserLogged: Boolean(localStorage.getItem("user")),
+      loggedUser: JSON.parse(localStorage.getItem("user")),
     };
   },
-  props: {
-    username: {
-      type: String,
-      default() {
-        return "Студент физик";
-      },
-    },
-    isu_number: {
-      type: String,
-      default() {
-        return localStorage.getItem("username") || "307526";
-      },
-    },
-    avatar_link: {
-      type: String,
-      default() {
-        const isu_id = localStorage.getItem("username");
-        return `https://isu.ifmo.ru/userpics/${isu_id}`;
-      },
+  computed: {
+    avatarLink() {
+      return `https://isu.ifmo.ru/userpics/${this.loggedUser.username}`;
     },
   },
 };

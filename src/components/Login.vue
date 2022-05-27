@@ -37,7 +37,7 @@
 
 <script>
 // import router from "../routing";
-import { doUserLogin } from "../store/userActions";
+import { doLoginServer } from "../store/userActions";
 
 export default {
   data() {
@@ -49,12 +49,15 @@ export default {
   },
   methods: {
     authorize() {
-      if (doUserLogin(this.loginInput, this.passwordInput)) {
-        this.retryEnter = false;
-        this.$router.push("/");
-      } else {
-        this.retryEnter = true;
-      }
+      doLoginServer(this.loginInput, this.passwordInput).then(() => {
+        if (localStorage.getItem("token")) {
+          this.retryEnter = false;
+          this.$router.push("/");
+          this.$router.go(0);
+        } else {
+          this.retryEnter = true;
+        }
+      });
     },
   },
 };
