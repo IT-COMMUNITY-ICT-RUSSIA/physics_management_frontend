@@ -9,7 +9,7 @@
     <a
       role="button"
       data-bs-toggle="popover"
-      :title="user ? user.isu_id : null"
+      :title="user ? user.full_name : null"
       @click="slotStatus = false"
       @mouseover="iconStatus = true"
       @mouseleave="iconStatus = !iconStatus"
@@ -18,7 +18,7 @@
         <sign-in-icon />
       </span>
       <span v-else>
-        <img :src="userAvatar" v-if="user" id="user_img" />
+        <img :src="userAvatar" v-if="currentUser" id="user_img" />
         <test-user-icon v-else />
       </span>
     </a>
@@ -66,20 +66,18 @@ export default {
     return {
       slotStatus: !this.isAvailableSlot(),
       iconStatus: false,
+      currentUser: JSON.parse(localStorage.getItem("user")),
     };
   },
 
   methods: {
-    // isReservedByCurrentUser() {
-    //   return this.user === 
-    // },
     isAvailableSlot() {
       return !Boolean(this.user);
     },
   },
   computed: {
     userAvatar() {
-      return `https://isu.ifmo.ru/userpics/${this.user.isu_number}`;
+      return `https://isu.ifmo.ru/userpics/${this.currentUser.username}`;
     },
   },
 };
