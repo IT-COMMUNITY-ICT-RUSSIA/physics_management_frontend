@@ -62,7 +62,7 @@ export default {
 
 #user_img {
   width: 90px;
-  height: auto;
+  height: 90px;
   border-radius: 90px;
   border: 3px solid var(--primary-color-blue);
 }
