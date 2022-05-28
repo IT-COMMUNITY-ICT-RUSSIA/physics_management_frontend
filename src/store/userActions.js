@@ -35,14 +35,17 @@ export const doLogout = () => {
 };
 
 export const doFetchBoard = () => {
-  axios
-    .get(backendUrl + "/board")
-    .then((res) => {
-      console.log(res.data.board);
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+  return new Promise((resolve, reject) => {
+    axios
+      .get(backendUrl + "/board")
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((e) => {
+        console.log(`Request failed with ${e}`);
+        reject();
+      });
+  });
 };
 
 export const doFetchMe = () => {
@@ -50,7 +53,7 @@ export const doFetchMe = () => {
   axios
     .get(
       backendUrl + "/me",
-      { params: {token: localStorage.getItem("token")} },
+      { params: { token: localStorage.getItem("token") } },
       {
         "Content-type": "application/json",
       }

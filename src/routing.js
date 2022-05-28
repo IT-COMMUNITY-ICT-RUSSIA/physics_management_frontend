@@ -3,8 +3,8 @@ import SchedulePage from "@/views/SchedulePage.vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
-  { path: "/login", component: LoginPage },
-  { path: "/", component: SchedulePage },
+  { path: "/login", name: "login", component: LoginPage },
+  { path: "/", name: "home", component: SchedulePage },
 ];
 
 const router = createRouter({

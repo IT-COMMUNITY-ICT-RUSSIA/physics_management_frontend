@@ -36,10 +36,15 @@
 </template>
 
 <script>
-// import router from "../routing";
 import { doLoginServer } from "../store/userActions";
+import router from "../routing";
 
 export default {
+  setup() {
+    if (localStorage.getItem("token")) {
+      router.replace({ path: "/" });
+    }
+  },
   data() {
     return {
       passwordInput: "",
@@ -52,8 +57,8 @@ export default {
       doLoginServer(this.loginInput, this.passwordInput).then(() => {
         if (localStorage.getItem("token")) {
           this.retryEnter = false;
-          this.$router.push("/");
-          this.$router.go(0);
+          router.replace({ path: "/" });
+          setTimeout("document.location.reload();", 100);
         } else {
           this.retryEnter = true;
         }
