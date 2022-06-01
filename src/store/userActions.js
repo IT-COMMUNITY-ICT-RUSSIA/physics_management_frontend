@@ -84,7 +84,7 @@ export const doBookSlot = (user, col, row) => {
     });
 };
 
-export const doClearSlot = (user, row, col) => {
+export const doClearSlot = (user, col, row) => {
   console.log("clearing slot for " + user.username);
   return axios
     .delete(backendUrl + `/board?col=${col}&row=${row}`, {
@@ -94,6 +94,6 @@ export const doClearSlot = (user, row, col) => {
       res.data.status === "200"
         ? console.log("slot cleared")
         : console.log("failed");
-      window.location.href = window.location.href;
+      // window.location.href = window.location.href;
     });
 };
