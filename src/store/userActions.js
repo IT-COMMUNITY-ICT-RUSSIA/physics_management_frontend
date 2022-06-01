@@ -35,17 +35,15 @@ export const doLogout = () => {
 };
 
 export const doFetchBoard = () => {
-  return new Promise((resolve, reject) => {
-    axios
-      .get(backendUrl + "/board")
-      .then((res) => {
-        resolve(res.data);
-      })
-      .catch((e) => {
-        console.log(`Request failed with ${e}`);
-        reject();
-      });
-  });
+  return axios
+    .get(backendUrl + "/board")
+    .then((res) => {
+      console.log(res);
+      return res.data;
+    })
+    .catch((e) => {
+      console.log(`Request failed with ${e}`);
+    });
 };
 
 export const doFetchMe = () => {
@@ -65,5 +63,37 @@ export const doFetchMe = () => {
     .catch((e) => {
       // localStorage.clear();
       console.error(e);
+    });
+};
+
+export const doBookSlot = (user, col, row) => {
+  console.log("booking slot for " + user.username);
+  return axios
+    .post(
+      backendUrl +
+        `/board?col=${col}&row=${row}&token=${localStorage.getItem("token")}`,
+      {
+        "Content-type": "application/json",
+      }
+    )
+    .then((res) => {
+      res.data.status === "200"
+        ? console.log("slot booked")
+        : console.log("failed");
+      window.location.href = window.location.href;
+    });
+};
+
+export const doClearSlot = (user, row, col) => {
+  console.log("clearing slot for " + user.username);
+  return axios
+    .delete(backendUrl + `/board?col=${col}&row=${row}`, {
+      "Content-type": "application/json",
+    })
+    .then(() => {
+      res.data.status === "200"
+        ? console.log("slot cleared")
+        : console.log("failed");
+      window.location.href = window.location.href;
     });
 };
