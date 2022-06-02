@@ -33,11 +33,11 @@ export const doUserLogin = (username, password) => {
 };
 
 export const doLogout = () => {
-  toast.info("Выходим из учетной записи");
+  toast.info("Выходим из учетной записи", { timeout: 1000 });
   setTimeout(() => {
     localStorage.clear();
     window.location.href = window.location.href;
-  }, 5000);
+  }, 1000);
 };
 
 export const doFetchBoard = () => {
@@ -53,22 +53,22 @@ export const doFetchBoard = () => {
 };
 
 export const doFetchMe = () => {
-  console.log("token + " + localStorage.getItem("token"));
-  axios
-    .get(
-      backendUrl + "/me",
-      { params: { token: localStorage.getItem("token") } },
-      {
-        "Content-type": "application/json",
-      }
-    )
-    .then((res) => {
-      localStorage.setItem("user", JSON.stringify(res.data.user));
-      console.log(res.data.user);
-    })
-    .catch((e) => {
-      console.error(e);
-    });
+  localStorage.getItem("token") &&
+    axios
+      .get(
+        backendUrl + "/me",
+        { params: { token: localStorage.getItem("token") } },
+        {
+          "Content-type": "application/json",
+        }
+      )
+      .then((res) => {
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+        console.log(res.data.user);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
 };
 
 export const doBookSlot = (user, col, row) => {

@@ -57,10 +57,6 @@ export default {
     !this.error &&
       doFetchBoard()
         .then((data) => {
-          console.log(Object.entries(data.board));
-          // Object.entries(data.board).forEach(([_, element]) => {
-          //   this.board.push(element);
-          // });
           this.board = Object.entries(data.board);
           console.log(this.board[2][0]);
         })
@@ -69,7 +65,6 @@ export default {
           this.error = e;
         });
     doFetchMe();
-    console.log("got board:" + this.board);
   },
 };
 </script>

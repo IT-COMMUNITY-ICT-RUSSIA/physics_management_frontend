@@ -69,15 +69,9 @@ export default {
   border: 3px solid var(--primary-color-blue);
 }
 
-/*#user_img:hover {
-  border: 5px solid var(--primary-color-red);
-}*/
-
 #user_td_name {
-  width: 65%;
   text-align: left;
   font-size: 20px;
-  vertical-align: top;
   line-height: 1em;
 }
 
@@ -93,5 +87,9 @@ h3 {
 #logout:hover {
   color: blueviolet;
   cursor: grab;
+}
+
+#logo {
+  width: 150px;
 }
 </style>

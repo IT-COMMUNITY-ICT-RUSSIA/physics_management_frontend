@@ -10,14 +10,16 @@
       role="button"
       data-bs-toggle="popover"
       :title="user ? user.full_name : null"
-      @click="bookSlot()"
-      @mouseover="iconStatus = true"
-      @mouseleave="iconStatus = !iconStatus"
+      @click="currentUser && bookSlot()"
+      @mouseover="iconStatus = currentUser ? true : false"
+      @mouseleave="iconStatus = currentUser ? !iconStatus : iconStatus"
     >
-      <span v-if="iconStatus && !slotStatus">
+      <span v-if="currentUser && iconStatus && !slotStatus">
         <add-icon />
       </span>
-      <span v-else-if="iconStatus && slotStatus && checkPermissions">
+      <span
+        v-else-if="currentUser && iconStatus && slotStatus && checkPermissions"
+      >
         <sign-in-icon />
       </span>
       <span v-else-if="!iconStatus && !slotStatus">
@@ -71,7 +73,7 @@ export default {
           console.log("this isn't your slot");
         }
       } else {
-        doBookSlot(this.currentUser, this.colId, this.rowId)
+        doBookSlot(this.currentUser, this.colId, this.rowId);
         this.slotStatus = !this.slotStatus;
       }
     },

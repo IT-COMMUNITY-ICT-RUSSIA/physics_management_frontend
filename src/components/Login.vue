@@ -1,7 +1,7 @@
 <template>
   <span id="background">
-    <div class="mb-3">
-      <p class="text-center fs-4">Physics MVP</p>
+    <div class="mb-3 text-center">
+      <img src="logo.png" id="logo">
     </div>
     <div class="mb-3">
       <label for="login" class="form-label fs-5">Имя пользователя</label>
@@ -38,12 +38,16 @@
 <script>
 import { doLoginServer } from "../store/userActions";
 import router from "../routing";
+import { useToast } from "vue-toastification";
 
 export default {
   setup() {
     if (localStorage.getItem("token")) {
       router.replace({ path: "/" });
     }
+  },
+  mounted() {
+    this.showHint();
   },
   data() {
     return {
@@ -53,16 +57,25 @@ export default {
     };
   },
   methods: {
+    showHint() {
+      const toast = useToast();
+      toast.info(
+        "ВНИМАНИЕ! Это тестовая версия системы. Для входа введите свой номер ISU и пароль testing"
+      );
+    },
     authorize() {
-      doLoginServer(this.loginInput, this.passwordInput).then(() => {
-        if (localStorage.getItem("token")) {
-          this.retryEnter = false;
-          router.replace({ path: "/" });
-          setTimeout("document.location.reload();", 100);
-        } else {
-          this.retryEnter = true;
-        }
-      });
+      this.showHint();
+      this.passwordInput &&
+        this.loginInput &&
+        doLoginServer(this.loginInput, this.passwordInput).then(() => {
+          if (localStorage.getItem("token")) {
+            this.retryEnter = false;
+            router.replace({ path: "/" });
+            setTimeout("document.location.reload();", 100);
+          } else {
+            this.retryEnter = true;
+          }
+        });
     },
   },
 };
@@ -74,5 +87,8 @@ export default {
 }
 p {
   color: var(--main-font-color);
+}
+#logo {
+  width: 150px;
 }
 </style>
