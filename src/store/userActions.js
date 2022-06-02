@@ -61,7 +61,6 @@ export const doFetchMe = () => {
       console.log(res.data.user);
     })
     .catch((e) => {
-      // localStorage.clear();
       console.error(e);
     });
 };
@@ -94,6 +93,6 @@ export const doClearSlot = (user, col, row) => {
       res.data.status === "200"
         ? console.log("slot cleared")
         : console.log("failed");
-      // window.location.href = window.location.href;
+      window.location.href = window.location.href;
     });
 };
