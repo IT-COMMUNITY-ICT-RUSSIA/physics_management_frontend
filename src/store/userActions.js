@@ -1,7 +1,9 @@
 import axios from "axios";
 import config from "../config.json";
+import { useToast } from "vue-toastification";
 
 const backendUrl = config.backend;
+const toast = useToast({ timeout: 4000 });
 
 export const doLoginServer = (username, password) => {
   return axios
@@ -31,7 +33,11 @@ export const doUserLogin = (username, password) => {
 };
 
 export const doLogout = () => {
-  localStorage.clear();
+  toast.info("Выходим из учетной записи");
+  setTimeout(() => {
+    localStorage.clear();
+    window.location.href = window.location.href;
+  }, 5000);
 };
 
 export const doFetchBoard = () => {
@@ -76,10 +82,12 @@ export const doBookSlot = (user, col, row) => {
       }
     )
     .then((res) => {
-      res.data.status === "200"
-        ? console.log("slot booked")
-        : console.log("failed");
-      window.location.href = window.location.href;
+      res.data.status === 200
+        ? toast.success("Слот забронирован! Страница будет перезагружена...")
+        : toast.error(res.data.details);
+      setTimeout(() => {
+        window.location.href = window.location.href;
+      }, 5000);
     });
 };
 
@@ -89,10 +97,12 @@ export const doClearSlot = (user, col, row) => {
     .delete(backendUrl + `/board?col=${col}&row=${row}`, {
       "Content-type": "application/json",
     })
-    .then(() => {
-      res.data.status === "200"
-        ? console.log("slot cleared")
-        : console.log("failed");
-      window.location.href = window.location.href;
+    .then((res) => {
+      res.data.status === 200
+        ? toast.success("Слот освобожден! Страница будет перезагружена...")
+        : toast.error(res.data.details);
+      setTimeout(() => {
+        window.location.href = window.location.href;
+      }, 5000);
     });
 };

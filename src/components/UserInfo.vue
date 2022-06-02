@@ -9,7 +9,7 @@
             v-bind:src="avatarLink"
             id="user_img"
             alt=""
-            @click="doLogout"
+            @click="Logout"
           />
         </td>
         <td style="width: 5%"></td>
@@ -17,7 +17,7 @@
           <td id="user_td_name">
             <h3>{{ loggedUser.full_name }}</h3>
             {{ loggedUser.username }}
-            <a @click="doLogout" href=""> Выйти </a>
+            <a id="logout" @click="Logout"> Выйти </a>
           </td>
         </span>
         <span v-else>
@@ -32,13 +32,15 @@
 </template>
 
 <script>
+import { doLogout } from "../store/userActions";
 import TestUserIcon from "./Icons/TestUserIcon.vue";
 
 export default {
   components: { TestUserIcon },
   methods: {
-    doLogout() {
-      localStorage.clear();
+    Logout() {
+      console.log("logout");
+      doLogout();
     },
   },
   data() {
@@ -82,5 +84,14 @@ export default {
 h3 {
   font-size: 24px;
   color: var(--main-font-color);
+}
+
+#logout {
+  text-decoration-line: underline;
+  color: black;
+}
+#logout:hover {
+  color: blueviolet;
+  cursor: grab;
 }
 </style>
