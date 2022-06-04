@@ -12,8 +12,11 @@
           ></button>
         </div>
         <div class="modal-body">
-          <a v-if="!content">Тут пока ничего нет</a>
-          <span v-else v-for="c in content" :key="c">{{ c }}<br /></span>
+          <a v-if="!content.length">Тут пока ничего нет</a>
+          <span v-else v-for="c in content" :key="c"
+            ><b>{{ c[0] }}</b
+            >: {{ c[1] }}<br
+          /></span>
         </div>
         <div class="modal-footer">
           <button
@@ -22,12 +25,12 @@
             data-bs-dismiss="modal"
             @click="onClose()"
           >
-            Закрыть
+            ОК
           </button>
           <button
             type="button"
             class="btn btn-primary"
-            v-if="actionText"
+            v-if="actionText && onAction"
             @click="onAction()"
           >
             {{ actionText }}

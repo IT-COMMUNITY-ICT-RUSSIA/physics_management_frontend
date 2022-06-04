@@ -2,7 +2,7 @@
   <div class="container">
     <modal
       :header="'Статус установки'"
-      :content="statusData"
+      :content="Object.entries(statusData)"
       :onClose="
         () => {
           status = false;
@@ -17,6 +17,12 @@
       :onClose="
         () => {
           debug = false;
+        }
+      "
+      :actionText="'Очистить'"
+      :onAction="
+        () => {
+          events = [];
         }
       "
     />
@@ -145,13 +151,22 @@ import axios from "axios";
 import Modal from "../components/Modal.vue";
 export default {
   components: { Modal },
+  data() {
+    return {
+      debug: false,
+      status: false,
+      statusData: null,
+      freq: 0,
+      events: [],
+    };
+  },
   methods: {
     beep() {
       this.handleEvent("called beep");
       axios.get("http://192.168.192.126:1880/setup/music");
     },
     handleEvent(event) {
-      this.events.push(event);
+      this.events.push(["Событие", event]);
     },
     handleStatus() {
       this.handleEvent("received status");
@@ -161,15 +176,6 @@ export default {
         this.statusData = res.data;
       });
     },
-  },
-  data() {
-    return {
-      debug: false,
-      status: false,
-      statusData: null,
-      freq: 0,
-      events: [],
-    };
   },
 };
 </script>
