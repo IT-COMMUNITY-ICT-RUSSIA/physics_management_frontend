@@ -11,9 +11,9 @@
     <thead>
       <tr>
         <th scope="col" class="lead text-capitalize">
-          <left-arrow-icon class="arrow" @click="today++" />
-          <a>{{ today }}</a>
-          <right-arrow-icon class="arrow" @click="today--" />
+          <left-arrow-icon class="arrow" @click="decrementDate()" />
+          <a>{{ currentDate }}</a>
+          <right-arrow-icon class="arrow" @click="incrementDate()" />
         </th>
         <th scope="col" class="lead">Установка №1</th>
         <th scope="col" class="lead">Установка №2</th>
@@ -46,9 +46,18 @@ export default {
   props: {
     onLoad: Function,
   },
+  methods: {
+    incrementDate() {
+      this.today = this.today.add(1, "d");
+    },
+    decrementDate() {
+      console.log(this.today);
+      this.today = this.today.add(-1, "d");
+    },
+  },
   data() {
     return {
-      today: this.$dayjs(Date()).format("MMMM DD"),
+      today: this.$dayjs(Date()),
       board: [],
       error: null,
       booking: null,
@@ -65,11 +74,19 @@ export default {
           console.log(e);
           this.error = e;
         });
-    doFetchMe().then((data) => {
-      this.booking = data.booking;
-      this.booking !== null ? this.onLoad(Number(this.booking)) : null;
-      console.log(data);
-    });
+    const me = doFetchMe();
+    me
+      ? me.then((data) => {
+          this.booking = data.booking;
+          this.booking !== null ? this.onLoad(Number(this.booking)) : null;
+          console.log(data);
+        })
+      : null;
+  },
+  computed: {
+    currentDate() {
+      return this.today.format("DD MMMM");
+    },
   },
 };
 </script>

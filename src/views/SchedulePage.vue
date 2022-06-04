@@ -16,9 +16,14 @@
       <schedule :onLoad="replaceTime" />
     </div>
     <div class="row">
-      <p class="sub-h description">
+      <p class="sub-h description" v-if="!scheduledTime">
         Нажмите на свободное место, чтобы записаться на соответствующую
         установку и время.
+      </p>
+      <p class="sub-h description" v-else>
+        <b>Чтобы отменить запись, нажмите на свой аватар.</b> После этого ваше
+        место будет доступно для записи другим студентам. Вам
+        <b>будет доступна</b> запись на другое время.
       </p>
     </div>
     <div class="row text-center align-middle">
@@ -39,6 +44,7 @@
 <script>
 import Schedule from "../components/Schedule/Schedule.vue";
 import UserInfo from "../components/UserInfo.vue";
+import { useToast } from "vue-toastification";
 
 export default {
   components: {
@@ -55,6 +61,21 @@ export default {
     replaceTime(time) {
       this.scheduledTime = this.$dayjs().hour() + time;
     },
+    showInfo() {
+      const toast = useToast();
+      toast.info(
+        `Уже можно перейти к замерам, поторопитесь! В ${
+          this.scheduledTime + 1
+        }:00 ваша запись закроется`
+      );
+    },
+  },
+  updated() {
+    if (this.$dayjs().hour() === this.scheduledTime) {
+      this.showInfo();
+    }
+    console.log(this.$dayjs().hour());
+    console.log(this.scheduledTime);
   },
   data() {
     return {
