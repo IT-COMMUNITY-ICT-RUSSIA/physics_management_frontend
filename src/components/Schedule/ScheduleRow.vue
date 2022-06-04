@@ -7,6 +7,7 @@
     <td v-for="i in [0, 1, 2]" :key="i">
       <span v-for="colId in [0, 1]" :key="colId">
         <schedule-slot
+          :user="rowData[colId + i * 2]"
           :colId="colId + i * 2"
           :rowId="rowId"
         ></schedule-slot>
@@ -23,7 +24,7 @@ export default {
   components: { ScheduleSlot, TestUserIcon },
   props: {
     rowId: Number,
-    rowData: Object,
+    rowData: Array,
   },
   computed: {
     isAvailable() {

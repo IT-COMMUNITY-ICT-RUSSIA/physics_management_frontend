@@ -93,4 +93,9 @@ export default {
   color: var(--primary-color-dark-gray);
   background-color: var(--primary-color-light-gray) !important;
 }
+
+#logo-itmo {
+  width: 150px;
+  align-content: right;
+}
 </style>

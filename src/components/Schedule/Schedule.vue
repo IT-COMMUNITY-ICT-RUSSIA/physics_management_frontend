@@ -1,5 +1,13 @@
 <template>
-  <table class="table table-borderless table-hover text-center align-middle">
+  <span v-if="error">
+    <div class="text-center">
+      Ошибка при обращении к серверу, попробуйте позже
+    </div>
+  </span>
+  <table
+    class="table table-borderless table-hover text-center align-middle"
+    v-else
+  >
     <thead>
       <tr>
         <th scope="col" class="lead text-capitalize">
@@ -13,9 +21,16 @@
       </tr>
     </thead>
     <tbody>
-      <schedule-row :rowId="id" v-for="id in [0, 1, 2, 3]" :key="id" />
+      <schedule-row
+        v-for="el in board"
+        :key="el"
+        :rowData="el[1]"
+        :rowId="Number(el[0])"
+      />
     </tbody>
   </table>
+  <!-- {{ board }} -->
+  <!-- {{ board[0][1] ? "ds": "dss" }} -->
 </template>
 
 <script>
@@ -25,10 +40,6 @@ import LeftArrowIcon from "../Icons/LeftArrowIcon.vue";
 import { doFetchBoard, doFetchMe } from "../../store/userActions";
 
 export default {
-  setup() {
-    doFetchBoard();
-    doFetchMe();
-  },
   components: {
     ScheduleRow,
     RightArrowIcon,
@@ -37,7 +48,23 @@ export default {
   data() {
     return {
       today: this.$dayjs(Date()).format("MMMM DD"),
+      board: [],
+      error: null,
     };
+  },
+  beforeMount() {
+    this.board = [];
+    !this.error &&
+      doFetchBoard()
+        .then((data) => {
+          this.board = Object.entries(data.board);
+          console.log(this.board[2][0]);
+        })
+        .catch((e) => {
+          console.log(e);
+          this.error = e;
+        });
+    doFetchMe();
   },
 };
 </script>
