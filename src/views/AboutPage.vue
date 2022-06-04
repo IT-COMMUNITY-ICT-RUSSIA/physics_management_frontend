@@ -1,70 +1,46 @@
 <template>
+  <div class="mb-3 text-center">
+    <img src="logo.png" id="logo" />
+  </div>
   <div class="container">
-    <div class="row">
-      <user-info />
-    </div>
-    <div class="row">
-      <p class="h-custom">Запись</p>
-    </div>
-    <div class="row">
-      <p class="sub-h">
-        Статус: <a class="inactive">не записан</a> или
-        <a class="active">запись на {{ scheduledTime }}</a>
-      </p>
-    </div>
-    <div class="row">
-      <schedule />
-    </div>
-    <div class="row">
-      <p class="sub-h description">
-        Нажмите на свободное место, чтобы записаться на соответствующую
-        установку и время.
-      </p>
-    </div>
-    <div class="row text-center align-middle">
-      <div class="col">
-        <button
-          type="button"
-          class="btn btn-secondary text-uppercase text-wrap"
-          v-if="counting"
-        >
-          Откроется через
-          <vue-countdown
-            :time="20 * 1000"
-            @end="stopCountdown"
-            v-slot="{ minutes, seconds }"
-          >
-            {{ normalizeTime(minutes) }}:{{ normalizeTime(seconds) }}
-          </vue-countdown>
-        </button>
-        <button class="btn btn-primary" v-else>Перейти к записи</button>
+    <div class="row justify-content-center">
+      <div class="col-md-auto align-self-center">
+        <p class="h-custom text-center">
+          Кто мы такие и что вообще тут забыли
+          <br />
+          Новая строка
+          <br />
+          <a id="change-text">
+            {{ textItems[textIndex] }}
+          </a>
+          . Продолжение текста
+          <br />
+          Еще что-то про нас
+          {{ textIndex }}
+        </p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Schedule from "../components/Schedule/Schedule.vue";
-import UserInfo from "../components/UserInfo.vue";
-
 export default {
-  components: {
-    UserInfo,
-    Schedule,
-  },
   methods: {
-    normalizeTime(time) {
-      return time < 10 ? "0" + time : time;
-    },
-    stopCountdown() {
-      this.counting = false;
+    countTextIndex() {
+        setTimeout(() => {
+          this.textIndex = (this.textIndex+1)%3;
+          this.countTextIndex();
+        }, 2000);
     },
   },
   data() {
     return {
-      scheduledTime: "12:00",
-      counting: true,
+      textIndex: 0,
+      textItems: ["Вариант 1", "Вариант 2", "Вариант 3"],
     };
+  },
+  created: function () {
+    this.countTextIndex();
   },
 };
 </script>
@@ -72,7 +48,12 @@ export default {
 <style scoped>
 .h-custom {
   color: var(--main-font-color);
-  font-size: 24px;
+  font-size: 36px;
+}
+#change-text {
+  color: #2e4ba5;
+  /* color: var(--primary-color-blue); */
+  font-size: 36px;
 }
 .sub-h {
   color: var(--main-font-color);
@@ -92,5 +73,18 @@ export default {
 .btn-secondary {
   color: var(--primary-color-dark-gray);
   background-color: var(--primary-color-light-gray) !important;
+}
+
+#logout {
+  text-decoration-line: underline;
+  color: black;
+}
+#logout:hover {
+  color: blueviolet;
+  cursor: grab;
+}
+
+#logo {
+  width: 250px;
 }
 </style>
