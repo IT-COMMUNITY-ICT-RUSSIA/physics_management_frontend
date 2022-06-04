@@ -11,9 +11,9 @@
     <thead>
       <tr>
         <th scope="col" class="lead text-capitalize">
-          <left-arrow-icon class="arrow" />
+          <left-arrow-icon class="arrow" @click="today++" />
           <a>{{ today }}</a>
-          <right-arrow-icon class="arrow" />
+          <right-arrow-icon class="arrow" @click="today--" />
         </th>
         <th scope="col" class="lead">Установка №1</th>
         <th scope="col" class="lead">Установка №2</th>
@@ -29,8 +29,6 @@
       />
     </tbody>
   </table>
-  <!-- {{ board }} -->
-  <!-- {{ board[0][1] ? "ds": "dss" }} -->
 </template>
 
 <script>
@@ -45,11 +43,15 @@ export default {
     RightArrowIcon,
     LeftArrowIcon,
   },
+  props: {
+    onLoad: Function,
+  },
   data() {
     return {
       today: this.$dayjs(Date()).format("MMMM DD"),
       board: [],
       error: null,
+      booking: null,
     };
   },
   beforeMount() {
@@ -58,13 +60,16 @@ export default {
       doFetchBoard()
         .then((data) => {
           this.board = Object.entries(data.board);
-          console.log(this.board[2][0]);
         })
         .catch((e) => {
           console.log(e);
           this.error = e;
         });
-    doFetchMe();
+    doFetchMe().then((data) => {
+      this.booking = data.booking;
+      this.booking !== null ? this.onLoad(Number(this.booking)) : null;
+      console.log(data);
+    });
   },
 };
 </script>

@@ -8,12 +8,12 @@
     </div>
     <div class="row">
       <p class="sub-h">
-        Статус: <a class="inactive">не записан</a> или
-        <a class="active">запись на {{ scheduledTime }}</a>
+        Статус: <a v-if="!scheduledTime" class="inactive">не записан</a>
+        <a v-else class="active">запись на {{ scheduledTime }}:00</a>
       </p>
     </div>
     <div class="row">
-      <schedule />
+      <schedule :onLoad="replaceTime" />
     </div>
     <div class="row">
       <p class="sub-h description">
@@ -22,22 +22,15 @@
       </p>
     </div>
     <div class="row text-center align-middle">
-      <div class="col">
+      <div class="col" v-if="scheduledTime">
         <button
           type="button"
           class="btn btn-secondary text-uppercase text-wrap"
-          v-if="counting"
+          v-if="new Date().getHours() !== scheduledTime"
         >
-          Откроется через
-          <vue-countdown
-            :time="20 * 1000"
-            @end="stopCountdown"
-            v-slot="{ minutes, seconds }"
-          >
-            {{ normalizeTime(minutes) }}:{{ normalizeTime(seconds) }}
-          </vue-countdown>
+          Откроется в {{ scheduledTime }}:00
         </button>
-        <button class="btn btn-primary" v-else>Перейти к записи</button>
+        <button class="btn btn-primary" v-else>Перейти к замерам</button>
       </div>
     </div>
   </div>
@@ -59,10 +52,13 @@ export default {
     stopCountdown() {
       this.counting = false;
     },
+    replaceTime(time) {
+      this.scheduledTime = this.$dayjs().hour() + time;
+    },
   },
   data() {
     return {
-      scheduledTime: "12:00",
+      scheduledTime: null,
       counting: true,
     };
   },
@@ -79,14 +75,14 @@ export default {
   font-size: 16px;
 }
 .inactive {
-  color: var(--primary-color-red);
+  color: var(--primary-color-gray);
   text-decoration: none;
 }
 .description {
   color: var(--primary-color-gray);
 }
 .active {
-  color: inherit;
+  color: var(--primary-color-red);
   text-decoration: none;
 }
 .btn-secondary {
