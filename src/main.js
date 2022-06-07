@@ -15,13 +15,13 @@ dayjs.locale("ru");
 const app = createApp(App);
 
 app.config.globalProperties.$dayjs = dayjs;
+app.config.globalProperties.$router = router;
 
 app.component(VueCountdown.name, VueCountdown);
 
 app.use(Toast);
 app.use(useRouter);
 app.use(router);
-
 app.mount("#app");
 
 export default app;

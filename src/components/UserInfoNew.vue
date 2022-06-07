@@ -1,36 +1,34 @@
 <template>
   <div class="containter">
-    <div>
-      <test-user-icon
-        v-if="!isUserLogged"
+    <test-user-icon
+      v-if="!isUserLogged"
+      id="user_img"
+      title="Нажмите для авторизации"
+      @click="Login"
+    />
+    <a
+      v-else
+      @click="Logout"
+      @mouseover="onHover = true"
+      @mouseleave="onHover = false"
+    >
+      <img
+        v-if="!onHover"
+        v-bind:src="avatarLink"
+        :title="loggedUser.full_name"
         id="user_img"
-        title="Нажмите для авторизации"
-        @click="Login"
       />
-      <a
-        v-else
-        @click="Logout"
-        @mouseover="onHover = true"
-        @mouseleave="onHover = false"
-      >
-        <img
-          v-if="!onHover"
-          v-bind:src="avatarLink"
-          :title="loggedUser.full_name"
-          id="user_img"
-        />
-        <img id="user_img" v-else :src="'remove.png'" />
-      </a>
-    </div>
+      <img id="user_img" v-else :src="'remove.png'" />
+    </a>
   </div>
 </template>
 
 <script>
-import router from "../routing";
-import { doLogout } from "../store/userActions";
+import { doLogout } from "../store/userActions.js";
 import TestUserIcon from "./Icons/TestUserIcon.vue";
 
 export default {
+  name: "UserInfoNew",
   components: { TestUserIcon },
   methods: {
     Logout() {
@@ -38,7 +36,7 @@ export default {
       doLogout();
     },
     Login() {
-      router.replace({ path: "/login" });
+      this.$router.replace({ path: "/login" });
     },
   },
   data() {
