@@ -13,7 +13,7 @@
       </p>
     </div>
     <div class="row">
-      <schedule :onLoad="replaceTime" />
+      <schedule @loadTime="replaceTime" />
     </div>
     <div class="row">
       <p class="sub-h description" v-if="!scheduledTime">
@@ -35,7 +35,9 @@
         >
           Откроется в {{ scheduledTime }}:00
         </button>
-        <button class="btn btn-primary" v-else>Перейти к замерам</button>
+        <button class="btn btn-primary" v-else @click="goToEngine">
+          Перейти к замерам
+        </button>
       </div>
     </div>
   </div>
@@ -45,6 +47,7 @@
 import Schedule from "../components/Schedule/Schedule.vue";
 import UserInfo from "../components/UserInfo.vue";
 import { useToast } from "vue-toastification";
+import router from "../routing";
 
 export default {
   components: {
@@ -60,6 +63,9 @@ export default {
     },
     replaceTime(time) {
       this.scheduledTime = this.$dayjs().hour() + time;
+    },
+    goToEngine() {
+      router.replace({ path: "/engine" });
     },
     showInfo() {
       const toast = useToast();
