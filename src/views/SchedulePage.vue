@@ -1,15 +1,38 @@
 <template>
   <div class="container">
-    <div class="row">
-      <user-info />
-    </div>
+    <header
+      class="d-flex flex-wrap align-items-center align-self-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"
+    >
+      <a
+        href="/"
+        class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none"
+      >
+        <logo :width="80" />
+      </a>
+
+      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+        <li>
+          <a href="/" class="nav-link px-2 active" aria-current="page"
+            >Замеры</a
+          >
+        </li>
+        <li><a href="/about" class="nav-link px-2">О нас</a></li>
+        <li><a href="/me" class="nav-link px-2">Профиль</a></li>
+      </ul>
+
+      <div class="col-md-3 text-end">
+        <user-info-new />
+      </div>
+    </header>
+  </div>
+  <div class="container">
     <div class="row">
       <p class="h-custom">Запись</p>
     </div>
     <div class="row">
       <p class="sub-h">
         Статус: <a v-if="!scheduledTime" class="inactive">не записан</a>
-        <a v-else class="active">запись на {{ scheduledTime }}:00</a>
+        <a v-else id="active">запись на {{ scheduledTime }}:00</a>
       </p>
     </div>
     <div class="row">
@@ -41,6 +64,9 @@
       </div>
     </div>
   </div>
+  <footer>
+    <div class="divider"></div>
+  </footer>
 </template>
 
 <script>
@@ -48,11 +74,15 @@ import Schedule from "../components/Schedule/Schedule.vue";
 import UserInfo from "../components/UserInfo.vue";
 import { useToast } from "vue-toastification";
 import router from "../routing";
+import Logo from "../components/Icons/Logo.vue";
+import UserInfoNew from "../components/UserInfoNew.vue";
 
 export default {
   components: {
     UserInfo,
     Schedule,
+    Logo,
+    UserInfoNew,
   },
   methods: {
     normalizeTime(time) {
@@ -108,7 +138,7 @@ export default {
 .description {
   color: var(--primary-color-gray);
 }
-.active {
+#active {
   color: var(--primary-color-red);
   text-decoration: none;
 }
