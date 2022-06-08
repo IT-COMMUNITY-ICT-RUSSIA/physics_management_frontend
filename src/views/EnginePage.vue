@@ -1,147 +1,150 @@
 <template>
   <div class="container">
-    <modal
-      :header="'Статус установки'"
-      :content="Object.entries(statusData)"
-      :onClose="
-        () => {
-          status = false;
-        }
-      "
-      v-if="status"
-    />
-    <modal
-      v-if="debug"
-      :header="'Debug log'"
-      :content="events"
-      :onClose="
-        () => {
-          debug = false;
-        }
-      "
-      :actionText="'Очистить'"
-      :onAction="
-        () => {
-          events = [];
-        }
-      "
-    />
-    <div class="row" id="first">
-      <p class="text-center h-custom">УСТАНОВКА №1</p>
-    </div>
     <div class="row">
-      <div class="col">
-        <div class="accordion" id="accordionPanelsStayOpenExample">
-          <div class="accordion-item text-center">
-            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-              <button
-                class="accordion-button collapsed"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#panelsStayOpen-collapseOne"
-                aria-expanded="false"
-                aria-controls="panelsStayOpen-collapseOne"
+      <modal
+        :header="'Статус установки'"
+        :content="Object.entries(statusData)"
+        :onClose="
+          () => {
+            status = false;
+          }
+        "
+        v-if="status"
+      />
+      <modal
+        v-if="debug"
+        :header="'Debug log'"
+        :content="events"
+        :onClose="
+          () => {
+            debug = false;
+          }
+        "
+        :actionText="'Очистить'"
+        :onAction="
+          () => {
+            events = [];
+          }
+        "
+      />
+      <div class="row" id="first">
+        <p class="text-center h-custom">УСТАНОВКА №1</p>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item text-center">
+              <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#panelsStayOpen-collapseOne"
+                  aria-expanded="false"
+                  aria-controls="panelsStayOpen-collapseOne"
+                >
+                  Управление питанием
+                </button>
+              </h2>
+              <div
+                id="panelsStayOpen-collapseOne"
+                class="accordion-collapse collapse"
+                aria-labelledby="panelsStayOpen-headingOne"
               >
-                Управление питанием
-              </button>
-            </h2>
-            <div
-              id="panelsStayOpen-collapseOne"
-              class="accordion-collapse collapse"
-              aria-labelledby="panelsStayOpen-headingOne"
-            >
-              <div class="accordion-body d-grid gap-2">
-                <button type="button" class="btn btn-success" @click="beep">
-                  Включить установку
-                </button>
-                <button type="button" class="btn btn-danger" @click="beep">
-                  Выключить установку
-                </button>
+                <div class="accordion-body d-grid gap-2">
+                  <button type="button" class="btn btn-success" @click="beep">
+                    Включить установку
+                  </button>
+                  <button type="button" class="btn btn-danger" @click="beep">
+                    Выключить установку
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-              <button
-                class="accordion-button collapsed"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#panelsStayOpen-collapseTwo"
-                aria-expanded="false"
-                aria-controls="panelsStayOpen-collapseTwo"
-              >
-                Управление координатами
-              </button>
-            </h2>
-            <div
-              id="panelsStayOpen-collapseTwo"
-              class="accordion-collapse collapse"
-              aria-labelledby="panelsStayOpen-headingTwo"
-            >
-              <div class="accordion-body text-center d-grid gap-2">
-                <label for="customRange1" class="form-label"
-                  >Частота ({{ freq }})</label
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#panelsStayOpen-collapseTwo"
+                  aria-expanded="false"
+                  aria-controls="panelsStayOpen-collapseTwo"
                 >
-                <input
-                  type="range"
-                  class="form-range"
-                  id="customRange1"
-                  min="0"
-                  max="255"
-                  :value="freq"
-                  @input="(event) => (freq = event.target.value)"
-                />
+                  Управление координатами
+                </button>
+              </h2>
+              <div
+                id="panelsStayOpen-collapseTwo"
+                class="accordion-collapse collapse"
+                aria-labelledby="panelsStayOpen-headingTwo"
+              >
+                <div class="accordion-body text-center d-grid gap-2">
+                  <label for="customRange1" class="form-label"
+                    >Частота ({{ freq }})</label
+                  >
+                  <input
+                    type="range"
+                    class="form-range"
+                    id="customRange1"
+                    min="0"
+                    max="255"
+                    :value="freq"
+                    @input="(event) => (freq = event.target.value)"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-              <button
-                class="accordion-button collapsed"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#panelsStayOpen-collapseThree"
-                aria-expanded="false"
-                aria-controls="panelsStayOpen-collapseThree"
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#panelsStayOpen-collapseThree"
+                  aria-expanded="false"
+                  aria-controls="panelsStayOpen-collapseThree"
+                >
+                  Тестовый функционал
+                </button>
+              </h2>
+              <div
+                id="panelsStayOpen-collapseThree"
+                class="accordion-collapse collapse"
+                aria-labelledby="panelsStayOpen-headingThree"
               >
-                Тестовый функционал
-              </button>
-            </h2>
-            <div
-              id="panelsStayOpen-collapseThree"
-              class="accordion-collapse collapse"
-              aria-labelledby="panelsStayOpen-headingThree"
-            >
-              <div class="accordion-body text-center d-grid gap-2">
-                <button
-                  type="button"
-                  id="mButton"
-                  class="btn btn-info"
-                  @click="beep"
-                >
-                  Проиграть звук
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-warning"
-                  @click="debug = true"
-                >
-                  Debug info
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-success"
-                  @click="handleStatus"
-                >
-                  Статус установки
-                </button>
+                <div class="accordion-body text-center d-grid gap-2">
+                  <button
+                    type="button"
+                    id="mButton"
+                    class="btn btn-info"
+                    @click="beep"
+                  >
+                    Проиграть звук
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-warning"
+                    @click="debug = true"
+                  >
+                    Debug info
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-success"
+                    @click="handleStatus"
+                  >
+                    Статус установки
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <div class="col align-content-center">
+          Stream
+        </div>
       </div>
-      <div class="col"></div>
-      <div class="col">СТРИМ С УСТАНОВКИ</div>
     </div>
   </div>
 </template>
