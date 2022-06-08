@@ -1,19 +1,17 @@
 <template>
+  <Navbar />
   <div class="container">
-    <div class="row">
-      <user-info />
-    </div>
     <div class="row">
       <p class="h-custom">Запись</p>
     </div>
     <div class="row">
       <p class="sub-h">
         Статус: <a v-if="!scheduledTime" class="inactive">не записан</a>
-        <a v-else class="active">запись на {{ scheduledTime }}:00</a>
+        <a v-else id="active">запись на {{ scheduledTime }}:00</a>
       </p>
     </div>
     <div class="row">
-      <schedule :onLoad="replaceTime" />
+      <schedule @loadTime="replaceTime" />
     </div>
     <div class="row">
       <p class="sub-h description" v-if="!scheduledTime">
@@ -35,21 +33,27 @@
         >
           Откроется в {{ scheduledTime }}:00
         </button>
-        <button class="btn btn-primary" v-else>Перейти к замерам</button>
+        <button class="btn btn-primary" v-else @click="goToEngine">
+          Перейти к замерам
+        </button>
       </div>
     </div>
   </div>
+  <footer>
+    <div class="divider"></div>
+  </footer>
 </template>
 
 <script>
 import Schedule from "../components/Schedule/Schedule.vue";
-import UserInfo from "../components/UserInfo.vue";
+import Navbar from "../components/Navbar.vue";
 import { useToast } from "vue-toastification";
+import router from "../routing.js";
 
 export default {
   components: {
-    UserInfo,
     Schedule,
+    Navbar,
   },
   methods: {
     normalizeTime(time) {
@@ -60,6 +64,9 @@ export default {
     },
     replaceTime(time) {
       this.scheduledTime = this.$dayjs().hour() + time;
+    },
+    goToEngine() {
+      router.replace({ path: "/engine" });
     },
     showInfo() {
       const toast = useToast();
@@ -102,7 +109,7 @@ export default {
 .description {
   color: var(--primary-color-gray);
 }
-.active {
+#active {
   color: var(--primary-color-red);
   text-decoration: none;
 }

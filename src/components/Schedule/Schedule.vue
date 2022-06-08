@@ -43,9 +43,10 @@ export default {
     RightArrowIcon,
     LeftArrowIcon,
   },
-  props: {
-    onLoad: Function,
-  },
+  // props: {
+  //   onLoad: Function,
+  // },
+  emits: ["loadTime"],
   methods: {
     incrementDate() {
       this.today = this.today.add(1, "d");
@@ -63,7 +64,7 @@ export default {
       booking: null,
     };
   },
-  beforeMount() {
+  created() {
     this.board = [];
     !this.error &&
       doFetchBoard()
@@ -78,7 +79,8 @@ export default {
     me
       ? me.then((data) => {
           this.booking = data.booking;
-          this.booking !== null ? this.onLoad(Number(this.booking)) : null;
+          console.log(Number(this.booking));
+          this.booking !== null ? this.$emit("loadTime", Number(this.booking)) : null;
           console.log(data);
         })
       : null;
