@@ -1,19 +1,18 @@
 <template>
-  <!-- <div class="mb-3 text-center">
-    <img src="logo.png" id="logo" />
-  </div> -->
   <navbar />
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-auto align-self-center">
         <p class="h-custom text-center">
-          Кто мы такие.
+          Что это?
           <br />
-          Что тут забыли
+          Проект для
           <a id="change-text">
             {{ textItems[textIndex] }}
           </a>
-          . Продолжение текста
+          физических лабораторий
+          <br />
+          Университета ИТМО
         </p>
         <p class="h-custom text-center">Над проектом работали:</p>
       </div>
@@ -36,7 +35,7 @@
           <div class="col-md-auto align-self-center">
             <span class="sub-h">Open Source проекты факультета ИКТ</span>
             <a href="https://github.com/IT-COMMUNITY-ICT-RUSSIA" target="blank_"
-              ><img id="icon" src="gh.png"
+              ><img id="icon" src="/gh.png"
             /></a>
           </div>
         </div>
@@ -55,15 +54,21 @@ export default {
   methods: {
     countTextIndex() {
       setTimeout(() => {
-        this.textIndex = (this.textIndex + 1) % 3;
+        this.textIndex = (this.textIndex + 1) % this.textItems.length;
         this.countTextIndex();
-      }, 3000);
+      }, 1200);
     },
   },
   data() {
     return {
       textIndex: 0,
-      textItems: ["Вариант 1", "Вариант 2", "Вариант 3"],
+      textItems: [
+        "автоматизации",
+        "автономности",
+        "упрощения менеджмента",
+        "масштабирования",
+        "цифровизации",
+      ],
       persons: [
         {
           name: "Тимофеев Николай",
@@ -73,35 +78,41 @@ export default {
           telegram: "timofeev41",
           site: "https://linktr.ee/timofeev41",
           mail: "timofeevnik41@gmail.com",
+          info: "ФИКТ К3241. ISU: 307526",
         },
         {
           name: "Береза Никита",
           role: "Engine Team Lead, Backend",
           image: "bereza",
           telegram: "Just_Contest_It",
+          info: "ФИКТ К3241. ISU: 309506",
         },
         {
           name: "Барышева Зарина",
           role: "Schedule Team Frontend",
           image: "barysheva",
           telegram: "zemljanichka",
+          info: "ФИКТ К3241. ISU: 313103",
         },
         {
           name: "Кобелев Лев",
           role: "Schedule Team UI/UX Designer",
           image: "kobelev",
           github: "https://github.com/evlko",
+          info: "ФИКТ К3240. ISU: 314940",
         },
         {
           name: "Кормановская Дарина",
           role: "Schedule Team Frontend",
           image: "kormanovskaya",
           github: "https://github.com/eispoohw",
+          info: "ФИКТ К3241. ISU: 312317",
         },
         {
           name: "Савкин Владислав",
           role: "Engine Team Scripts",
           image: "savkin",
+          info: "ФИКТ К41112с. ISU: 243780",
         },
         {
           name: "Еремеева Арина",
@@ -110,11 +121,13 @@ export default {
           mail: "9212470342@mail.ru",
           site: "https://spb.hh.ru/resume/8fbf1b79ff09b4110b0039ed1f634d4b686e59",
           telegram: "arinae_vaa",
+          info: "ФИКТ К3241. ISU: 312315",
         },
         {
           name: "Паргачевский Николай",
           role: "Engine Team Backend: Node-Red",
           image: "pargachevsky",
+          info: "ФИКТ К41112с. ISU: 338087",
         },
         {
           name: "Борсов Никита",
@@ -122,6 +135,7 @@ export default {
           image: "borsov",
           telegram: "NikitaBorsov",
           mail: "NickBorsov@gmail.com",
+          info: "ФИКТ К3240. ISU: 316998",
         },
       ],
     };

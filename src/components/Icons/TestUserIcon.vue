@@ -1,5 +1,5 @@
 <template>
-  <img src="user.png" />
+  <img src="/user.png" />
 </template>
 
 <script>

@@ -4,26 +4,28 @@
     <div class="card-body">
       <h5 class="card-title">{{ person.name }}</h5>
       <p class="card-text" style="min-height: 100px; max-height: 100px">
-        {{ person.role }}
+        {{ person.role }} 
+        <br />
+        {{ person.info }}
         <br />
         <span v-if="person.github">
           <a :href="person.github" target="_blank"
-            ><img id="integration" src="gh.png"
+            ><img id="integration" src="/gh.png"
           /></a>
         </span>
         <span v-if="person.telegram">
           <a :href="'https://t.me/' + person.telegram" target="_blank"
-            ><img id="integration" src="tg.png"
+            ><img id="integration" src="/tg.png"
           /></a>
         </span>
         <span v-if="person.site">
           <a :href="person.site" target="_blank"
-            ><img id="integration" src="ws.png"
+            ><img id="integration" src="/ws.png"
           /></a>
         </span>
         <span v-if="person.mail">
           <a :href="'mailto:' + person.mail" target="_blank"
-            ><img id="integration" src="mail.png"
+            ><img id="integration" src="/mail.png"
           /></a>
         </span>
       </p>

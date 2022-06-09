@@ -1,7 +1,7 @@
 <template>
   <span id="background">
     <div class="mb-3 text-center">
-      <img src="logo.png" id="logo">
+      <img src="/logo.png" id="logo" @click="goHome" />
     </div>
     <div class="mb-3">
       <label for="login" class="form-label fs-5">Имя пользователя</label>
@@ -57,6 +57,9 @@ export default {
     };
   },
   methods: {
+    goHome() {
+      this.$router.replace({ path: "/" });
+    },
     showHint() {
       const toast = useToast();
       toast.info(
@@ -90,5 +93,6 @@ p {
 }
 #logo {
   width: 150px;
+  cursor: pointer;
 }
 </style>
