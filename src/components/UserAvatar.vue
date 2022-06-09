@@ -3,6 +3,7 @@
     :src="picUrl"
     :style="{ width: size + 'px', height: size + 'px' }"
     id="user_img"
+    title="Студент"
   />
 </template>
 

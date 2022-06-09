@@ -11,13 +11,9 @@
       @click="Logout"
       @mouseover="onHover = true"
       @mouseleave="onHover = false"
+      :title="loggedUser.full_name"
     >
-      <img
-        v-if="!onHover"
-        v-bind:src="avatarLink"
-        :title="loggedUser.full_name"
-        id="user_img"
-      />
+      <img v-if="!onHover" v-bind:src="avatarLink" id="user_img" />
       <img id="user_img" v-else :src="'remove.png'" />
     </a>
   </div>
