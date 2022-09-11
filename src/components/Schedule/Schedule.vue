@@ -1,14 +1,19 @@
 <template>
-  <!-- <div v-for="i in [1, 2, 3, 4]" :key="i">
-    <schedule-row :time="i + ' Час'" />
-  </div> -->
-  <table class="table table-borderless table-hover text-center align-middle">
+  <span v-if="error">
+    <div class="text-center">
+      Ошибка при обращении к серверу, попробуйте позже
+    </div>
+  </span>
+  <table
+    class="table table-borderless table-hover text-center align-middle"
+    v-else
+  >
     <thead>
       <tr>
         <th scope="col" class="lead text-capitalize">
-          <left-arrow-icon class="arrow" />
-          <a>{{ today }}</a>
-          <right-arrow-icon class="arrow" />
+          <left-arrow-icon class="arrow" @click="decrementDate()" />
+          <a>{{ currentDate }}</a>
+          <right-arrow-icon class="arrow" @click="incrementDate()" />
         </th>
         <th scope="col" class="lead">Установка №1</th>
         <th scope="col" class="lead">Установка №2</th>
@@ -16,7 +21,12 @@
       </tr>
     </thead>
     <tbody>
-      <schedule-row :time=i v-for="i in [1, 2, 3, 4]" :key="i" />
+      <schedule-row
+        v-for="el in board"
+        :key="el"
+        :rowData="el[1]"
+        :rowId="Number(el[0])"
+      />
     </tbody>
   </table>
 </template>
@@ -25,6 +35,7 @@
 import ScheduleRow from "./ScheduleRow.vue";
 import RightArrowIcon from "../Icons/RightArrowIcon.vue";
 import LeftArrowIcon from "../Icons/LeftArrowIcon.vue";
+import { doFetchBoard, doFetchMe } from "../../store/userActions";
 
 export default {
   components: {
@@ -32,10 +43,52 @@ export default {
     RightArrowIcon,
     LeftArrowIcon,
   },
+  // props: {
+  //   onLoad: Function,
+  // },
+  emits: ["loadTime"],
+  methods: {
+    incrementDate() {
+      this.today = this.today.add(1, "d");
+    },
+    decrementDate() {
+      console.log(this.today);
+      this.today = this.today.add(-1, "d");
+    },
+  },
   data() {
     return {
-      today: this.$dayjs(Date()).format("MMMM DD"),
+      today: this.$dayjs(Date()),
+      board: [],
+      error: null,
+      booking: null,
     };
+  },
+  created() {
+    this.board = [];
+    !this.error &&
+      doFetchBoard()
+        .then((data) => {
+          this.board = Object.entries(data.board);
+        })
+        .catch((e) => {
+          console.log(e);
+          this.error = e;
+        });
+    const me = doFetchMe();
+    me
+      ? me.then((data) => {
+          this.booking = data.booking;
+          console.log(Number(this.booking));
+          this.booking !== null ? this.$emit("loadTime", Number(this.booking)) : null;
+          console.log(data);
+        })
+      : null;
+  },
+  computed: {
+    currentDate() {
+      return this.today.format("DD MMMM");
+    },
   },
 };
 </script>

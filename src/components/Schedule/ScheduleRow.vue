@@ -1,14 +1,17 @@
 <template>
-  <!-- <schedule-slot /> -->
-
   <tr>
     <th class="lead text-center" scope="row">
       <div class="text-available" v-if="isAvailable">{{ range }}</div>
       <div v-else>{{ range }}</div>
     </th>
-    <td v-for="i in [1, 2, 3]" :key="i">
-      <test-user-icon class="icon" />
-      <test-user-icon class="icon" />
+    <td v-for="i in [0, 1, 2]" :key="i">
+      <span v-for="colId in [0, 1]" :key="colId">
+        <schedule-slot
+          :user="rowData[colId + i * 2]"
+          :colId="colId + i * 2"
+          :rowId="rowId"
+        ></schedule-slot>
+      </span>
     </td>
   </tr>
 </template>
@@ -20,18 +23,19 @@ import TestUserIcon from "../Icons/TestUserIcon.vue";
 export default {
   components: { ScheduleSlot, TestUserIcon },
   props: {
-    time: Number,
+    rowId: Number,
+    rowData: Array,
   },
   computed: {
     isAvailable() {
-      return this.$dayjs().hour() + this.time - 1 === this.$dayjs().hour();
+      return this.$dayjs().hour() + this.rowId === this.$dayjs().hour();
     },
     range() {
       return (
-        ((this.$dayjs().hour() + this.time - 1) % 24) +
+        ((this.$dayjs().hour() + this.rowId) % 24) +
         ":00" +
         " - " +
-        ((this.$dayjs().hour() + this.time) % 24) +
+        ((this.$dayjs().hour() + this.rowId + 1) % 24) +
         ":00"
       );
     },
